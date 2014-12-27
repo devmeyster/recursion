@@ -5,21 +5,38 @@
 
 var stringifyJSON = function(obj) {
   // your code goes here
-  if(obj === null){
-  	
-  	return "null";
 
-  }else if(typeof obj === "undefined" || typeof obj === 'function'){
-  	
-  	return undefined;
+  //Boolean, Number, and String objects are converted to the corresponding 
+  //primitive values during stringification, in accord with the traditional 
+  //conversion semantics 
 
-  }else if(typeof obj === "number" || typeof obj === "boolean"){
+  if(typeof obj === "number" || typeof obj === "boolean"){
   	
   	return obj.toString();
   
   }else if(typeof obj === "string"){
   	
   	return '"' + obj + '"';
+
+  //If undefined, a function, or a symbol is encountered during conversion 
+  //it is either omitted (when it is found in an object) or censored to null 
+  //(when it is found in an array).	
+
+  }else if(obj === null){
+  	
+  	return "null";
+
+  }else if(typeof obj === "undefined"){
+  	
+  	return undefined;
+
+  }else if(typeof obj === 'function'){
+  	
+  	return undefined;	
+
+
+  // If the object is an Array, iterate over the array and 
+  //call stringifyJSON on the elements of the array	
   
   }else if (Array.isArray(obj)) {
 
@@ -30,10 +47,14 @@ var stringifyJSON = function(obj) {
        for (var i = 0; i < obj.length; i++) {
        arr += stringifyJSON(obj[i])+",";
      }
-       return arr.slice(0,-1)+"]"
+       return arr.slice(0,-1)+"]" //Ommit the last comma and add a bracket
   	}
   }else{
-   
+   	 
+  	//if obj is an 'object', iterate of the object with for-in loop and check
+  	//if the corresponding 'value' pair is not a function and not undefined
+  	//if thats the case, stringify the "key" and "value" pair 
+
      var ob = "{";
      for(var key in obj){
        if(typeof obj[key]!== 'undefined' && typeof obj[key]!== 'function'){
@@ -41,6 +62,6 @@ var stringifyJSON = function(obj) {
        }
      }
       
-     return ob.length === 1 ? ob+ "}" : ob.slice(0,-1) + "}";
-  }
+     return ob.length === 1 ? ob+ "}" : ob.slice(0,-1) + "}"; //if the object is empty, add closing "}"
+  }															  //otherwise ommit the last comma and add a closing bracket
 };
