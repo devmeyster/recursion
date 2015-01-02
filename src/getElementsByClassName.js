@@ -31,7 +31,7 @@ var getElementsByClassName = function (className) {
     for (var i=0; i<nodeList.length; i++) {
       if (nodeList[i].nodeType === 1 && nodeList[i].classList.contains(className)) {
         results.push(nodeList[i]);
-      } else if (nodeList[i].childNodes.length >= 0) {
+      } else if (nodeList[i].hasChildNodes()) {
         walk(nodeList[i]);                       
       }
     }
