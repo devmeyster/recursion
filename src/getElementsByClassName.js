@@ -29,7 +29,7 @@ var getElementsByClassName = function (className) {
     //run the function "walk" on the node in question
           
     for (var i=0; i<nodeList.length; i++) {
-      if (nodeList[i].classList.contains(className)) {
+      if (nodeList[i].nodeType === 1 && nodeList[i].classList.contains(className)) {
         results.push(nodeList[i]);
       } else if (nodeList[i].childNodes.length >= 0) {
         walk(nodeList[i]);                       
