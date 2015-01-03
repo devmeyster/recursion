@@ -11,17 +11,15 @@ var getElementsByClassName = function (className) {
     var results = [];
     var rootClasses = root.classList;
     var nodeList = root.childNodes;
-    
-    //Checks to see if the argument root has any assigned 'classes' by 
-    //checking the length of rootClasses. If rootClasses doesn't equal 0, 
-    //check if it contains the desired 'className' we are looking for. If it does
+     
+    //check if the 'root' contains the desired 'className' we are looking for. If it does
     //add (push) 'root' to 'results'
       
-    if (rootClasses.length !==0) {
-      if (rootClasses.contains(className)){
-        results.push(root);
-      }
+    
+    if (rootClasses.contains(className)){
+      results.push(root);
     }
+    
     
     //Iterate over the nodeList, and check if each node[i] contains 
     //the desired "className", if yes, push node[i] to the 'results' array
@@ -32,7 +30,7 @@ var getElementsByClassName = function (className) {
       if (nodeList[i].nodeType === 1 && nodeList[i].classList.contains(className)) {
         results.push(nodeList[i]);
       } else if (nodeList[i].hasChildNodes()) {
-          walk(nodeList[i]);                       
+          Array.prototype.push.apply(results, walk(nodeList[i]));          
       }
     }
     return results;
